@@ -107,7 +107,8 @@ $(function() {
 <li>Only the underlying (string view) type's functionality can be used.</li>
 </ul>
 <h1>Configuration</h1>
-<p><a href="https://matepek.github.io/jasl">See documentation.</a></p>
+<p><a href="https://matepek.github.io/jasl">See documentation here!</a></p>
+<p><a href="https://matepek.github.io/jasl/globals.html">And here!</a></p>
 <h1>Changelog</h1>
 <p><a class="el" href="md__c_h_a_n_g_e_l_o_g.html">Here: CHANGELOG.md</a></p>
 <h1>Correctness</h1>
@@ -120,8 +121,8 @@ $(function() {
 <li>[ninja]: A pretty fast build tool. <a href="https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages">Install it</a> or <a href="https://github.com/ninja-build/ninja/releases">download</a></li>
 <li><a href="https://www.python.org/downloads/">python</a>: It is required by https://chromium.googlesource.com/chromium/src/+/master/tools/gn/README.md "gn". Note: Make sure your python directory is contained by the <code>PATH</code> environment variable.</li>
 </ul>
-<p>There is a <code>build/build_helper.py</code> script. If it is called with &ndash;install parameter, it will download the gn and ninja.</p>
-<p>Once again: One doesn't have to deal with this. It is only for those who would like to see the test results themselves. (I've chosen https://chromium.googlesource.com/chromium/src/+/master/tools/gn/README.md "gn" because I wanted to understand and learn the technology a bit.)</p>
+<p>There is a <code>build/build_helper.py</code> script. If it is called with <code>--install</code> parameter, it will download the gn and ninja.</p>
+<p><b>Once again</b>: One doesn't have to deal with this. It is only for those who would like to see the test results themselves. (I've chosen https://chromium.googlesource.com/chromium/src/+/master/tools/gn/README.md "gn" because I wanted to understand and learn the technology a bit.)</p>
 <h2>Building, testing and generating coverage report</h2>
 <p>After https://chromium.googlesource.com/chromium/src/+/master/tools/gn/README.md "gn" and <a href="https://github.com/ninja-build/ninja">ninja</a> is installed it is easy (hopefully). Typically the output directory is inside the <code>out</code> directory (which is part of the repo, but empty now). From command line from the project's root directory:</p>
 <div class="fragment"><div class="line">gn gen out/default</div></div><!-- fragment --><p>This will create a directory inside <code>out</code> and generate the <a href="https://github.com/ninja-build/ninja">ninja</a> files. It's time to build:</p>
@@ -154,7 +155,7 @@ $(function() {
 <p>Source location: <code>performance/*.performance.cpp</code></p>
 <h4>(Generated) Performance Test Results</h4>
 <h5>./comparison_with_std_string.performance</h5>
-<p>JASL version: 1.0.0 (2018-07-19)</p>
+<p>JASL version: 1.0.0-beta (2018-07-19)</p>
 <p>This performance test compares construction and destruction of the jasl::static_string and the <a href="include/jasl_string.hpp">jasl::string</a> to <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a>.</p>
 <p>Parameters:</p><ul>
 <li>( ItemCount, IterCount ) := ( 100000, 5 )</li>
@@ -169,27 +170,27 @@ $(function() {
 </ul>
 <p><b>NOTE</b>: Base type of the <a href="include/jasl_static_string.hpp">jasl::static_string</a> and <a href="include/jasl_string.hpp">jasl::string</a> is <a href="include/jasl_string_view.hpp">jasl::string_view</a>.</p>
 <ul>
-<li>short <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / short <a href="include/jasl_static_string.hpp">jasl::static_string</a> = 208 %<ul>
+<li>short <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / short <a href="include/jasl_static_string.hpp">jasl::static_string</a> = <b>208 %</b><ul>
 <li>short [jasl::static_string]: 1.54476e-08 sec / unit</li>
 <li>short [std::string]: 3.22507e-08 sec / unit</li>
 </ul>
 </li>
-<li>short <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / short static <a href="include/jasl_string.hpp">jasl::string</a> = 186 %<ul>
+<li>short <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / short static <a href="include/jasl_string.hpp">jasl::string</a> = <b>186 %</b><ul>
 <li>short static [jasl::string]: 1.7339e-08 sec / unit</li>
 <li>short [std::string]: 3.22507e-08 sec / unit</li>
 </ul>
 </li>
-<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long <a href="include/jasl_static_string.hpp">jasl::static_string</a> = 4083 %<ul>
+<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long <a href="include/jasl_static_string.hpp">jasl::static_string</a> = <b>4083 %</b><ul>
 <li>long [jasl::static_string]: 1.29123e-08 sec / unit</li>
 <li>long [std::string]: 5.27216e-07 sec / unit</li>
 </ul>
 </li>
-<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long static <a href="include/jasl_string.hpp">jasl::string</a> = 3480 %<ul>
+<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long static <a href="include/jasl_string.hpp">jasl::string</a> = <b>3480 %</b><ul>
 <li>long static [jasl::string]: 1.5146e-08 sec / unit</li>
 <li>long [std::string]: 5.27216e-07 sec / unit</li>
 </ul>
 </li>
-<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long dynamic <a href="include/jasl_string.hpp">jasl::string</a> = 199 %<ul>
+<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long dynamic <a href="include/jasl_string.hpp">jasl::string</a> = <b>199 %</b><ul>
 <li>long dynamic [jasl::string]: 2.63628e-07 sec / unit</li>
 <li>long [std::string]: 5.27216e-07 sec / unit</li>
 </ul>
@@ -219,7 +220,7 @@ $(function() {
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jul 19 2018 01:28:43 for JASL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jul 31 2018 10:34:53 for JASL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.14
 </small></address>
