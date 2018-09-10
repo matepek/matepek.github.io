@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['changelog',['Changelog',['../md__c_h_a_n_g_e_l_o_g.html',1,'']]]
+  ['jasl_20_28just_20another_20string_20library_29',['JASL (Just Another String Library)',['../index.html',1,'']]]
 ];
