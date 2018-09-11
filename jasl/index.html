@@ -70,7 +70,7 @@ $(function() {
 <p>This repository contains <b>C++** string classes with **static character array/C-string</b> support.</p>
 <h1>Motivation</h1>
 <p>Sometimes we would like to use hardwired text resources. For example throwing an exception where the message is user specified. Just like in case of <a href="http://en.cppreference.com/w/cpp/error/runtime_error">std::runtime_error</a> the message (<em>const char*</em> parameter named <em>what_arg</em>) is "typically stored internally", which means the parameter will be copied. But usually users use it like <code>std::runtime_error("Coyote catched the Roadrunner!")</code> or <code>std::runtime_error(__FILE__)</code> where the <em>what_arg</em> is actually a a hardwired text. In this cases the copying seems unnecessary.</p>
-<p>Creating your own exception and using this library's <a href="include/jasl/static_string.hpp">jasl::static_string</a> class will eliminate the unnecessary copy in a type-safe way. For example the compiler will generate an error in case of the following situation: </p><div class="fragment"><div class="line">{c++}</div><div class="line">jasl::static_string s(&quot;Bear trap was activated!&quot;); // ok</div><div class="line">s = &quot;Bear trap was activated!&quot;; // ok</div><div class="line"></div><div class="line">// this is ok too, becasue []</div><div class="line">const char exception_message[] = &quot;Bear trap was activated!&quot;;</div><div class="line">jasl::static_string s(exception_message); // ok</div><div class="line">s = exception_message; // ok</div><div class="line"></div><div class="line">const char* exception_message_ptr = &quot;Bear trap was activated!&quot;;</div><div class="line">jasl::static_string s(exception_message_ptr); // compilation error!!</div><div class="line">s = exception_message_ptr;  // compilation error!!</div></div><!-- fragment --><p>Continuing the previous example: What if we occasionally want to use the dynamic string, but in the majority of the cases we would like to use static string. The <a href="include/jasl/string.hpp">jasl::string</a> class supposed to give a solution for this situation. Check the example: </p><div class="fragment"><div class="line">{c++}</div><div class="line">const char exception_message[] = &quot;Bear trap was activated!&quot;;</div><div class="line">jasl::string s(exception_message); // ok: A pointer to the original charater array is copied.</div><div class="line">s = exception_message; // ok: A pointer to the original charater array is copied.</div><div class="line">s.assign(exception_message); // ok: A pointer to the original charater array is copied.</div><div class="line"></div><div class="line">const char* exception_message_ptr = exception_message;</div><div class="line">jasl::string s(exception_message_ptr); // ok: Memory is allocated and the message is copied.</div><div class="line">s = exception_message_ptr; // compilation error: can&#39;t do this, use assign instead!</div><div class="line">s.assign(exception_message_ptr); // ok: Memory is allocated and the message is copied.</div></div><!-- fragment --><h1>Requirements</h1>
+<p>Creating your own exception and using this library's <a href="include/jasl/jasl_static_string.hpp">jasl::static_string</a> class will eliminate the unnecessary copy in a type-safe way. For example the compiler will generate an error in case of the following situation: </p><div class="fragment"><div class="line">{c++}</div><div class="line">jasl::static_string s(&quot;Bear trap was activated!&quot;); // ok</div><div class="line">s = &quot;Bear trap was activated!&quot;; // ok</div><div class="line"></div><div class="line">// this is ok too, becasue []</div><div class="line">const char exception_message[] = &quot;Bear trap was activated!&quot;;</div><div class="line">jasl::static_string s(exception_message); // ok</div><div class="line">s = exception_message; // ok</div><div class="line"></div><div class="line">const char* exception_message_ptr = &quot;Bear trap was activated!&quot;;</div><div class="line">jasl::static_string s(exception_message_ptr); // compilation error!!</div><div class="line">s = exception_message_ptr;  // compilation error!!</div></div><!-- fragment --><p>Continuing the previous example: What if we occasionally want to use the dynamic string, but in the majority of the cases we would like to use static string. The <a href="include/jasl/jasl_string.hpp">jasl::string</a> class supposed to give a solution for this situation. Check the example: </p><div class="fragment"><div class="line">{c++}</div><div class="line">const char exception_message[] = &quot;Bear trap was activated!&quot;;</div><div class="line">jasl::string s(exception_message); // ok: A pointer to the original charater array is copied.</div><div class="line">s = exception_message; // ok: A pointer to the original charater array is copied.</div><div class="line">s.assign(exception_message); // ok: A pointer to the original charater array is copied.</div><div class="line"></div><div class="line">const char* exception_message_ptr = exception_message;</div><div class="line">jasl::string s(exception_message_ptr); // ok: Memory is allocated and the message is copied.</div><div class="line">s = exception_message_ptr; // compilation error: can&#39;t do this, use assign instead!</div><div class="line">s.assign(exception_message_ptr); // ok: Memory is allocated and the message is copied.</div></div><!-- fragment --><h1>Requirements</h1>
 <ul>
 <li><a href="http://en.cppreference.com/w/cpp/header">C++ standard library</a></li>
 <li>clang, gcc or msvc</li>
@@ -87,9 +87,9 @@ $(function() {
 <p>Note: For building and running tests see <a href="#tests-test-coverage-and-performance-tests">Tests, Test Coverage and Performance Tests</a></p>
 <h1><a href="https://matepek.github.io/jasl/index.html">Documentation</a></h1>
 <p>This is a header-only library containing</p><ul>
-<li><a href="include/jasl/string_view.hpp">jasl::string_view</a>,</li>
-<li><a href="include/jasl/static_string.hpp">jasl::static_string</a>,</li>
-<li><a href="include/jasl/string.hpp">jasl::string</a></li>
+<li><a href="include/jasl/jasl_string_view.hpp">jasl::string_view</a>,</li>
+<li><a href="include/jasl/jasl_static_string.hpp">jasl::static_string</a>,</li>
+<li><a href="include/jasl/jasl_string.hpp">jasl::string</a></li>
 </ul>
 <p>classes.</p>
 <p>Location: <code>include</code> directory.</p>
@@ -147,7 +147,7 @@ $(function() {
 <p>In case of <code>is_generate_test_coverage=true</code> gn argument the building will generate html code coverage reports. Works with clang.</p>
 <p>Location of the test coverage results: <code>out/&lt;outdir&gt;/*.coverage</code> directories.</p>
 <p><b>Note</b>: The coverage report is not perfect.</p>
-<p>For example in case of the <a href="include/jasl/static_string.hpp">jasl::static_string</a>'s coverage report the <a href="include/jasl/string_view.hpp">jasl::string_view</a> file's coverage is irrelevant. Also because of some function is <code>constexpr</code> the compiler does its work and executes the code at compile time. In this case the method may seems uncovered. Another problem with the coverage is that the library's classes contain templates and the the C++ compilers only instantiate those which are used, the unused ones are not instatiated so those won't be seen in the report as an uncovered code.</p>
+<p>For example in case of the <a href="include/jasl/jasl_static_string.hpp">jasl::static_string</a>'s coverage report the <a href="include/jasl/jasl_string_view.hpp">jasl::string_view</a> file's coverage is irrelevant. Also because of some function is <code>constexpr</code> the compiler does its work and executes the code at compile time. In this case the method may seems uncovered. Another problem with the coverage is that the library's classes contain templates and the the C++ compilers only instantiate those which are used, the unused ones are not instatiated so those won't be seen in the report as an uncovered code.</p>
 <p><b>Note</b>: Generating coverage report with gcc is also works, but it only generates raw data.</p>
 <h3>Performance Tests</h3>
 <p>Performance tests are compiled by the building process, but it won't run them.</p>
@@ -156,7 +156,7 @@ $(function() {
 <h4>(Generated) Performance Test Results</h4>
 <h5>./comparison_with_std_string.performance</h5>
 <p>JASL version: 1.0.0-beta (2018-07-19)</p>
-<p>This performance test compares construction and destruction of the jasl::static_string and the <a href="include/jasl/string.hpp">jasl::string</a> to <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a>.</p>
+<p>This performance test compares construction and destruction of the jasl::static_string and the <a href="include/jasl/jasl_string.hpp">jasl::string</a> to <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a>.</p>
 <p>Parameters:</p><ul>
 <li>( ItemCount, IterCount ) := ( 100000, 5 )</li>
 <li><p class="startli">( sizeof(short_string_array), sizeof(long_string_array) ) := ( 6, 150 )</p>
@@ -168,29 +168,29 @@ $(function() {
 <li>Memory: 8 GB 1600 MHz DDR3</li>
 <li>Operating System: macOS 10.13.4</li>
 </ul>
-<p><b>NOTE</b>: Base type of the <a href="include/jasl/static_string.hpp">jasl::static_string</a> and <a href="include/jasl/string.hpp">jasl::string</a> is <a href="include/jasl/string_view.hpp">jasl::string_view</a>.</p>
+<p><b>NOTE</b>: Base type of the <a href="include/jasl/jasl_static_string.hpp">jasl::static_string</a> and <a href="include/jasl/jasl_string.hpp">jasl::string</a> is <a href="include/jasl/jasl_string_view.hpp">jasl::string_view</a>.</p>
 <ul>
-<li>short <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / short <a href="include/jasl/static_string.hpp">jasl::static_string</a> = <b>208 %</b><ul>
+<li>short <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / short <a href="include/jasl/jasl_static_string.hpp">jasl::static_string</a> = <b>208 %</b><ul>
 <li>short [jasl::static_string]: 1.54476e-08 sec / unit</li>
 <li>short [std::string]: 3.22507e-08 sec / unit</li>
 </ul>
 </li>
-<li>short <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / short static <a href="include/jasl/string.hpp">jasl::string</a> = <b>186 %</b><ul>
+<li>short <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / short static <a href="include/jasl/jasl_string.hpp">jasl::string</a> = <b>186 %</b><ul>
 <li>short static [jasl::string]: 1.7339e-08 sec / unit</li>
 <li>short [std::string]: 3.22507e-08 sec / unit</li>
 </ul>
 </li>
-<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long <a href="include/jasl/static_string.hpp">jasl::static_string</a> = <b>4083 %</b><ul>
+<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long <a href="include/jasl/jasl_static_string.hpp">jasl::static_string</a> = <b>4083 %</b><ul>
 <li>long [jasl::static_string]: 1.29123e-08 sec / unit</li>
 <li>long [std::string]: 5.27216e-07 sec / unit</li>
 </ul>
 </li>
-<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long static <a href="include/jasl/string.hpp">jasl::string</a> = <b>3480 %</b><ul>
+<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long static <a href="include/jasl/jasl_string.hpp">jasl::string</a> = <b>3480 %</b><ul>
 <li>long static [jasl::string]: 1.5146e-08 sec / unit</li>
 <li>long [std::string]: 5.27216e-07 sec / unit</li>
 </ul>
 </li>
-<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long dynamic <a href="include/jasl/string.hpp">jasl::string</a> = <b>199 %</b><ul>
+<li>long <a href="http://en.cppreference.com/w/cpp/string/basic_string">std::string</a> / long dynamic <a href="include/jasl/jasl_string.hpp">jasl::string</a> = <b>199 %</b><ul>
 <li>long dynamic [jasl::string]: 2.63628e-07 sec / unit</li>
 <li>long [std::string]: 5.27216e-07 sec / unit</li>
 </ul>
@@ -222,7 +222,7 @@ $(function() {
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Sep 11 2018 01:50:52 for JASL by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 11 2018 09:59:59 for JASL by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.14
 </small></address>
